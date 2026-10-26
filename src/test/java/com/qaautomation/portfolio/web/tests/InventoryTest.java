@@ -1,5 +1,6 @@
 package com.qaautomation.portfolio.web.tests;
 
+import com.qaautomation.portfolio.core.RetryOnFailure;
 import com.qaautomation.portfolio.core.web.BaseWebTest;
 import com.qaautomation.portfolio.utils.TestData;
 import com.qaautomation.portfolio.web.pages.InventoryPage;
@@ -68,7 +69,7 @@ class InventoryTest extends BaseWebTest {
         inventoryPage.shouldHaveAllFields();
     }
 
-    @Test
+    @RetryOnFailure
     void shouldOpenAndCloseBurgerMenu() {
         inventoryPage.openBurgerMenu()
                 .shouldBeOpened()

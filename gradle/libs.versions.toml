@@ -4,6 +4,7 @@ selenide = "7.19.0"
 appium = "11.0.0"
 restassured = "6.2.0"
 junit = "5.14.4"
+junitPioneer = "2.3.0"
 allure = "2.35.5"
 allureCommandline = "2.46.1"
 jackson = "2.22.4"
@@ -14,6 +15,7 @@ log4j = "2.25.5"
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
+junit-pioneer = { module = "org.junit-pioneer:junit-pioneer", version.ref = "junitPioneer" }
 selenium-bom = { module = "org.seleniumhq.selenium:selenium-bom", version.ref = "selenium" }
 selenide = { module = "com.codeborne:selenide", version.ref = "selenide" }
 appium = { module = "io.appium:java-client", version.ref = "appium" }

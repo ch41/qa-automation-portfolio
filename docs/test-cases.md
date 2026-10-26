@@ -113,6 +113,8 @@
 
 Cross-browser smoke: 5 тестов (`login`, `catalog`, `cart`, `checkout`, `logout`) в Chrome и Firefox.
 
+Web-suite выполняется параллельно в 2 потока. Для известного флейка `InventoryTest.shouldOpenAndCloseBurgerMenu` включены 2 попытки.
+
 Отчёт Allure:
 
 ```text

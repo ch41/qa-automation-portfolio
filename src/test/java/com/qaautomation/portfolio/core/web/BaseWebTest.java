@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Tag("web")
 public abstract class BaseWebTest {
@@ -20,6 +21,7 @@ public abstract class BaseWebTest {
     private static final Path ALLURE_RESULTS = Path.of(
             System.getProperty("allure.results.directory", "build/allure-results")
     );
+    private static final AtomicBoolean ENVIRONMENT_WRITTEN = new AtomicBoolean();
 
     static {
         SelenideLogger.addListener(
@@ -40,6 +42,10 @@ public abstract class BaseWebTest {
     }
 
     private void writeAllureEnvironment() {
+        if (!ENVIRONMENT_WRITTEN.compareAndSet(false, true)) {
+            return;
+        }
+
         String environment = """
                 browser=%s
                 browser.size=%s

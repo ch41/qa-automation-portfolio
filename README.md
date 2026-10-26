@@ -11,7 +11,7 @@
 | UI-тесты | Selenide 7.19, Selenium 4.51 |
 | API-тесты | RestAssured 6.2 |
 | Mobile | Appium Java Client 11 |
-| Test runner | JUnit 5.14 |
+| Test runner | JUnit 5.14, JUnit Pioneer 2.3 (retry) |
 | Отчётность | Allure 2.35 (библиотеки), Allure commandline 2.46.1 |
 | Проверки | AssertJ 3.27, Hamcrest |
 | CI | GitHub Actions |
@@ -93,6 +93,24 @@ src/test/resources/testdata
 
 Доступ к данным централизован в `TestData`; тесты не содержат цен, сумм и данных покупателя.
 
+## Параллельность и retry
+
+Настройки JUnit Platform:
+
+```text
+src/test/resources/junit-platform.properties
+```
+
+По умолчанию включены параллельные классы и методы, `fixed.parallelism=2`. Selenide держит отдельный WebDriver в каждом потоке.
+
+Переопределение из командной строки:
+
+```powershell
+.\gradlew.bat webTest "-Djunit.jupiter.execution.parallel.config.fixed.parallelism=4"
+```
+
+Retry точечный: аннотация `@RetryOnFailure` даёт 2 попытки для известных нестабильных UI-тестов. Глобального retry нет, чтобы не скрывать реальные дефекты.
+
 ## Запуск тестов
 
 ```powershell
@@ -160,6 +178,13 @@ build/allure-results
 build/reports/allure-report/allureReport
 ```
 
+`--clean` очищает только HTML-отчёт, но не результаты прошлых прогонов. Для чистого локального отчёта запускайте тесты после `clean`:
+
+```powershell
+.\gradlew.bat clean apiTest webTest
+.\gradlew.bat allureReport --clean
+```
+
 Локальный просмотр:
 
 ```powershell
@@ -195,11 +220,11 @@ Pipeline:
 1. Checkout.
 2. JDK 21.
 3. Кэш Gradle.
-4. `apiTest` и полный `webTest` в Chrome headless.
+4. `apiTest` и полный `webTest` в Chrome headless; JUnit-параллельность — 2 потока.
 5. Параллельная матрица `webSmokeTest`: Chrome и Firefox.
 6. Генерация Allure-отчёта и загрузка `allure-results`/HTML как artifacts.
 
-`mobileTest` в CI не запускается: нужны Appium и Android-устройство.
+`mobileTest` в CI не запускается: нужны Appium и Android-устройство. Для известных флейков используется точечный `@RetryOnFailure`, а не глобальный retry.
 
 ## Покрытие
 
@@ -230,14 +255,16 @@ Mobile: **1 smoke-тест** на ApiDemos.
 - Mobile-тест проверяет только запуск демо-приложения.
 - Cross-browser matrix ограничена smoke-набором в Chrome и Firefox; полный набор идёт в Chrome.
 - Нет Safari/WebKit и Edge в CI.
-- Нет параллельного запуска тестов внутри одного браузера.
+- Параллельность ограничена 2 потоками; при увеличении нужно следить за CPU, памятью и нагрузкой на SauceDemo.
+- Retry применяется только к известным нестабильным тестам и не заменяет исправление причин флейков.
 - Нет проверок accessibility и performance.
 - `Reset App State` в SauceDemo не обновляет кнопку товара до повторного входа в каталог; тест учитывает это поведение.
 
 ## Roadmap
 
 - [ ] Cross-browser: Edge и Safari/WebKit.
-- [ ] Параллельный запуск тестов.
+- [ ] Увеличение parallelism после стабилизации suite.
+- [ ] Мониторинг flake rate и удаление временных retry.
 - [ ] Checkout с пустой корзиной.
 - [ ] Публикация Allure-отчёта.
 - [ ] Расширение mobile-покрытия.

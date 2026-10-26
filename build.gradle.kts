@@ -20,6 +20,7 @@ dependencies {
     testImplementation(platform(libs.selenium.bom))
 
     testImplementation(libs.junit.jupiter)
+    testImplementation(libs.junit.pioneer)
     testRuntimeOnly(libs.junit.platform.launcher)
 
     testImplementation(libs.restassured)
@@ -42,7 +43,7 @@ allure {
     version.set(libs.versions.allureCommandline.get())
 }
 
-val configPrefixes = listOf("env", "api.", "web.", "mobile.")
+val configPrefixes = listOf("env", "api.", "web.", "mobile.", "junit.")
 
 tasks.withType<Test>().configureEach {
     systemProperties(
