@@ -12,9 +12,20 @@ public final class RequestSpecificationFactory {
     }
 
     public static RequestSpecification requestSpec() {
+        return requestSpec(
+                Config.get("api.base.url"),
+                Config.get("api.base.path", "")
+        );
+    }
+
+    public static RequestSpecification requestSpec(String baseUri) {
+        return requestSpec(baseUri, "");
+    }
+
+    public static RequestSpecification requestSpec(String baseUri, String basePath) {
         return new RequestSpecBuilder()
-                .setBaseUri(Config.get("api.base.url"))
-                .setBasePath(Config.get("api.base.path", ""))
+                .setBaseUri(baseUri)
+                .setBasePath(basePath)
                 .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json")
                 .addFilter(new AllureRestAssured())
