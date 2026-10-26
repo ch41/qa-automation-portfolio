@@ -1,0 +1,25 @@
+{
+  "postId": 1,
+  "missingPostId": 999999,
+  "userId": 1,
+  "limit": 3,
+  "commentsPostId": 5,
+  "createPost": {
+    "userId": 1,
+    "id": 0,
+    "title": "QA automation portfolio",
+    "body": "Created by RestAssured"
+  },
+  "updatePost": {
+    "userId": 1,
+    "id": 1,
+    "title": "Updated QA automation portfolio",
+    "body": "Updated by RestAssured"
+  },
+  "mock": {
+    "unauthorized": "unauthorized",
+    "notFound": "not found",
+    "serverError": "internal server error",
+    "malformedJson": "not-json"
+  }
+}

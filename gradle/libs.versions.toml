@@ -9,6 +9,7 @@ allure = "2.35.5"
 allureCommandline = "2.46.1"
 jackson = "2.22.4"
 assertj = "3.27.7"
+wiremock = "3.13.2"
 log4j = "2.25.5"
 
 [libraries]
@@ -23,6 +24,7 @@ restassured = { module = "io.rest-assured:rest-assured", version.ref = "restassu
 restassured-json-schema = { module = "io.rest-assured:json-schema-validator", version.ref = "restassured" }
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
 assertj = { module = "org.assertj:assertj-core", version.ref = "assertj" }
+wiremock = { module = "org.wiremock:wiremock", version.ref = "wiremock" }
 allure-junit5 = { module = "io.qameta.allure:allure-junit5", version.ref = "allure" }
 allure-selenide = { module = "io.qameta.allure:allure-selenide", version.ref = "allure" }
 allure-restassured = { module = "io.qameta.allure:allure-rest-assured", version.ref = "allure" }

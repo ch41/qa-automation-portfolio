@@ -1,6 +1,6 @@
 # QA Automation Portfolio
 
-Портфолио-проект по автоматизации тестирования: UI-тесты SauceDemo, API-тесты на JSONPlaceholder и мобильный smoke-тест на ApiDemos.
+Портфолио-проект по автоматизации тестирования: UI-тесты SauceDemo, API-тесты на JSONPlaceholder и WireMock, мобильный smoke-тест на ApiDemos.
 
 ## Стек
 
@@ -9,7 +9,8 @@
 | Язык | Java 21 |
 | Сборка | Gradle 9.6, Kotlin DSL |
 | UI-тесты | Selenide 7.19, Selenium 4.51 |
-| API-тесты | RestAssured 6.2 |
+| API-тесты | RestAssured 6.2, JSON Schema Validator |
+| API mocking | WireMock 3.13 |
 | Mobile | Appium Java Client 11 |
 | Test runner | JUnit 5.14, JUnit Pioneer 2.3 (retry) |
 | Отчётность | Allure 2.35 (библиотеки), Allure commandline 2.46.1 |
@@ -22,6 +23,7 @@
 src/test/java/com/qaautomation/portfolio
 ├── api
 │   ├── client          # RestAssured-клиенты
+│   ├── data            # API-тестовые данные
 │   ├── model           # API-модели
 │   ├── spec            # request/response specifications
 │   └── tests           # API-тесты
@@ -88,10 +90,11 @@ src/test/resources/config/local.properties
 src/test/resources/testdata
 ├── users.json       # пользователи SauceDemo
 ├── products.json    # товары, цены и ожидаемые порядки сортировок
-└── checkout.json    # покупатель, оплата, доставка и суммы заказов
+├── checkout.json    # покупатель, оплата, доставка и суммы заказов
+└── api.json         # ID, payloads и сообщения ошибок API
 ```
 
-Доступ к данным централизован в `TestData`; тесты не содержат цен, сумм и данных покупателя.
+Доступ к web-данным централизован в `TestData`, к API-данным — в `ApiTestData`. JSON Schema лежат в `src/test/resources/schemas`.
 
 ## Параллельность и retry
 
@@ -241,7 +244,13 @@ Web: **40 тестов**.
 | Checkout validation | 4 |
 | Checkout cancel | 2 |
 
-API: **2 теста** на JSONPlaceholder.
+API: **12 тестов**.
+
+| Модуль | Тестов |
+|---|---:|
+| JSONPlaceholder: CRUD, фильтры, комментарии, JSON Schema | 8 |
+| WireMock: 401, 404, 500, malformed JSON | 4 |
+
 Mobile: **1 smoke-тест** на ApiDemos.
 
 Подробнее:
@@ -251,7 +260,7 @@ Mobile: **1 smoke-тест** на ApiDemos.
 
 ## Ограничения
 
-- API-тесты не относятся к SauceDemo; используется JSONPlaceholder.
+- API-тесты не относятся к SauceDemo; JSONPlaceholder не сохраняет изменения, поэтому PUT/DELETE проверяют ответ, а не состояние. Негативные сценарии изолированы в WireMock.
 - Mobile-тест проверяет только запуск демо-приложения.
 - Cross-browser matrix ограничена smoke-набором в Chrome и Firefox; полный набор идёт в Chrome.
 - Нет Safari/WebKit и Edge в CI.

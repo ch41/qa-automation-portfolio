@@ -82,8 +82,20 @@
 
 | ID | Сценарий | Шаги | Ожидаемый результат | Приоритет | Автоматизация |
 |---|---|---|---|---|---|
-| TC-API-001 | Получение поста | GET `/posts/1` | Статус `200`, `id = 1`, заголовок не пустой | P2 | `PostApiTest.shouldReturnPostById` |
-| TC-API-002 | Создание поста | POST `/posts` с телом | Статус `201`, создан `id`, заголовок и тело совпадают | P2 | `PostApiTest.shouldCreatePost` |
+| TC-API-001 | Получение поста | GET `/posts/1` | Статус `200`, `id = 1`, заголовок не пустой, JSON Schema | P2 | `PostApiTest.shouldReturnPostById` |
+| TC-API-002 | Создание поста | POST `/posts` с телом | Статус `201`, создан `id`, заголовок и тело совпадают, JSON Schema | P2 | `PostApiTest.shouldCreatePost` |
+| TC-API-003 | Список постов | GET `/posts` | Статус `200`, непустой массив, JSON Schema | P2 | `PostApiTest.shouldReturnPosts` |
+| TC-API-004 | Фильтр по пользователю | GET `/posts?userId=1` | Статус `200`, все посты принадлежат `userId = 1` | P2 | `PostApiTest.shouldFilterPostsByUser` |
+| TC-API-005 | Ограничение количества | GET `/posts?userId=1&_limit=3` | Статус `200`, ровно 3 поста | P3 | `PostApiTest.shouldLimitPosts` |
+| TC-API-006 | Комментарии поста | GET `/posts/5/comments` | Статус `200`, непустой список, все `postId = 5`, JSON Schema | P2 | `PostApiTest.shouldReturnCommentsForPost` |
+| TC-API-007 | Обновление поста | PUT `/posts/1` с телом | Статус `200`, `id`, `userId`, заголовок и тело обновлены, JSON Schema | P2 | `PostApiTest.shouldUpdatePost` |
+| TC-API-008 | Удаление поста | DELETE `/posts/1` | Статус `200`, тело `{}` | P2 | `PostApiTest.shouldDeletePost` |
+| TC-API-009 | Ошибка авторизации | WireMock: GET `/posts/1` → `401` | Статус `401`, заголовок `WWW-Authenticate`, JSON error Schema | P2 | `PostErrorHandlingTest.shouldReturnUnauthorized` |
+| TC-API-010 | Ресурс не найден | WireMock: GET `/posts/999999` → `404` | Статус `404`, JSON error Schema | P2 | `PostErrorHandlingTest.shouldReturnNotFound` |
+| TC-API-011 | Ошибка сервера | WireMock: GET `/posts/1` → `500` | Статус `500`, JSON error Schema | P2 | `PostErrorHandlingTest.shouldReturnServerError` |
+| TC-API-012 | Некорректный JSON | WireMock: GET `/posts/1` → `200` с `not-json` | Тело ответа сохраняется для диагностики | P3 | `PostErrorHandlingTest.shouldPreserveMalformedJson` |
+
+TC-API-009–012 используют WireMock; остальные — JSONPlaceholder.
 
 ## 7. Mobile
 
@@ -106,7 +118,7 @@
 | Набор | Количество | Статус |
 |---|---:|---|
 | Web | 40 | Все проходят |
-| API | 2 | Все проходят |
+| API | 12 | Все проходят |
 | Mobile | 1 | Требуется локальное окружение |
 
 36 документированных web-кейсов; `TC-AUTH-007` параметризован на 5 URL, поэтому запусков 40.

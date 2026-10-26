@@ -29,6 +29,7 @@ dependencies {
     testImplementation(libs.appium)
     testImplementation(libs.jackson.databind)
     testImplementation(libs.assertj)
+    testImplementation(libs.wiremock)
 
     testImplementation(libs.allure.junit5)
     testImplementation(libs.allure.selenide)

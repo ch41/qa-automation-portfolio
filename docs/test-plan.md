@@ -12,6 +12,7 @@
 |---|---|---|
 | SauceDemo | Web UI | `https://www.saucedemo.com` |
 | JSONPlaceholder | REST API | `https://jsonplaceholder.typicode.com` |
+| WireMock | REST API mock | динамический локальный порт |
 | ApiDemos | Android app | локальный emulator/device |
 
 ## 3. Цели
@@ -37,7 +38,7 @@
 - Cross-browser smoke: Chrome и Firefox в CI.
 - Параллельный запуск: 2 потока, отдельный WebDriver на поток.
 - Точечный retry: 2 попытки для известных нестабильных UI-тестов.
-- API: получение и создание поста.
+- API: CRUD, фильтры, комментарии, JSON Schema, 401/404/500 и malformed JSON.
 - Mobile: запуск настроенного приложения.
 
 ### Не входит в текущее покрытие
@@ -61,7 +62,7 @@
 2. **Интеграционные UI-тесты** — взаимодействие каталога, карточки товара и корзины.
 3. **E2E happy path** — полный путь от логина до подтверждения заказа.
 4. **Негативные проверки** — ошибки валидации и отмена checkout.
-5. **API smoke** — базовые CRUD-операции.
+5. **API** — CRUD и контракт на JSONPlaceholder, ошибки на WireMock.
 6. **Mobile smoke** — запуск приложения.
 
 ### Принципы
@@ -137,7 +138,15 @@ src/test/resources/testdata/checkout.json
 
 ### API
 
-JSONPlaceholder, тестовый пост создаётся с заголовком `QA automation portfolio`.
+JSONPlaceholder используется для CRUD, фильтров, комментариев и JSON Schema. Негативные сценарии (401, 404, 500, malformed JSON) изолированы в WireMock, потому что публичный API не позволяет стабильно управлять такими ответами.
+
+Файл:
+
+```text
+src/test/resources/testdata/api.json
+```
+
+Схемы ответов: `src/test/resources/schemas`.
 
 ## 8. Критерии входа
 
@@ -200,7 +209,7 @@ build/reports/allure-report/allureReport
 | Направление | Статус |
 |---|---|
 | Web UI | 40 тестов, все проходят |
-| API | 2 теста, все проходят |
+| API | 12 тестов, все проходят |
 | Mobile | 1 smoke-тест, требуется локальное окружение |
 | CI | API + полный web в Chrome, smoke matrix Chrome/Firefox |
 | Параллельность | 2 потока, классы и методы параллельно |
