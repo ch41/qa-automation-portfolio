@@ -1,0 +1,29 @@
+[versions]
+selenium = "4.51.0"
+selenide = "7.19.0"
+appium = "11.0.0"
+restassured = "6.2.0"
+junit = "5.14.4"
+allure = "2.35.5"
+allureCommandline = "2.46.1"
+jackson = "2.22.4"
+assertj = "3.27.7"
+log4j = "2.25.5"
+
+[libraries]
+junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
+selenium-bom = { module = "org.seleniumhq.selenium:selenium-bom", version.ref = "selenium" }
+selenide = { module = "com.codeborne:selenide", version.ref = "selenide" }
+appium = { module = "io.appium:java-client", version.ref = "appium" }
+restassured = { module = "io.rest-assured:rest-assured", version.ref = "restassured" }
+restassured-json-schema = { module = "io.rest-assured:json-schema-validator", version.ref = "restassured" }
+jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
+assertj = { module = "org.assertj:assertj-core", version.ref = "assertj" }
+allure-junit5 = { module = "io.qameta.allure:allure-junit5", version.ref = "allure" }
+allure-selenide = { module = "io.qameta.allure:allure-selenide", version.ref = "allure" }
+allure-restassured = { module = "io.qameta.allure:allure-rest-assured", version.ref = "allure" }
+log4j-api = { module = "org.apache.logging.log4j:log4j-api", version.ref = "log4j" }
+log4j-core = { module = "org.apache.logging.log4j:log4j-core", version.ref = "log4j" }
+log4j-slf4j = { module = "org.apache.logging.log4j:log4j-slf4j2-impl", version.ref = "log4j" }

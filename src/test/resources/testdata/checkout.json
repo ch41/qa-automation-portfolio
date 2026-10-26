@@ -1,0 +1,28 @@
+{
+  "customer": {
+    "firstName": "Anton",
+    "lastName": "Qwerty",
+    "postalCode": "224123"
+  },
+  "paymentInfo": "SauceCard #31337",
+  "shippingInfo": "Free Pony Express Delivery!",
+  "orders": {
+    "singleProduct": {
+      "items": [
+        "backpack"
+      ],
+      "subtotal": "$29.99",
+      "tax": "$2.40",
+      "total": "$32.39"
+    },
+    "multipleProducts": {
+      "items": [
+        "backpack",
+        "bikeLight"
+      ],
+      "subtotal": "$39.98",
+      "tax": "$3.20",
+      "total": "$43.18"
+    }
+  }
+}
