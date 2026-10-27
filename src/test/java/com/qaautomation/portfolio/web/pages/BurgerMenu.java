@@ -4,6 +4,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.CollectionCondition.exactTexts;
+import static com.codeborne.selenide.Condition.attribute;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -19,7 +20,10 @@ public class BurgerMenu {
     private final ElementsCollection menuItems = $$(".bm-item-list > .bm-item");
 
     public BurgerMenu open() {
-        openButton.shouldBe(visible).click();
+        openButton.shouldBe(visible);
+        menuContainer.shouldHave(attribute("aria-hidden", "true"));
+        menuContainer.shouldHave(attribute("hidden", "true"));
+        openButton.click();
         return shouldBeOpened();
     }
 
