@@ -1,5 +1,8 @@
 # QA Automation Portfolio
 
+[![Tests](https://github.com/ch41/qa-automation-portfolio/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/ch41/qa-automation-portfolio/actions/workflows/tests.yml)
+[![Allure Report](https://img.shields.io/badge/Allure-report-blue)](https://ch41.github.io/qa-automation-portfolio/)
+
 Портфолио-проект по автоматизации тестирования: UI-тесты SauceDemo, API-тесты на JSONPlaceholder и WireMock, мобильный smoke-тест на ApiDemos.
 
 ## Стек
@@ -180,6 +183,10 @@ build/allure-results
 ```text
 build/reports/allure-report/allureReport
 ```
+
+Публичная версия: [Allure Report](https://ch41.github.io/qa-automation-portfolio/).
+
+Отчёт публикуется автоматически из `master` только после успешных job `api-and-web` и `web-smoke`.
 
 `--clean` очищает только HTML-отчёт, но не результаты прошлых прогонов. Для чистого локального отчёта запускайте тесты после `clean`:
 
